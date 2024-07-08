@@ -2,5 +2,4 @@ ApiVersion: V1
 Kind: Deploy
 metadata: 
   Template:
-    apps: dev
 manifest:
