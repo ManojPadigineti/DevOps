@@ -1,5 +1,0 @@
-ApiVersion: V1
-Kind: Deploy
-metadata: 
-  Template:
-manifest:
