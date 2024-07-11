@@ -1,6 +1,0 @@
-apiversion:
-  kind:
-    metadata:
-      template:
-        spec:
-
