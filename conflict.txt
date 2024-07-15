@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 udhcshk
+=======
+najscn,jas
+>>>>>>> 81ec317264705c66cf880aff0cd1ba0872ff82cc
