@@ -4,10 +4,7 @@ pipeline {
     }
     stages {
         stage ('build') {
-            when {
-                  environment NAME: 'DEPLOY_TO', VALUE: 'staging'  
-                }
-            steps {
+           steps {
                 echo "hi"
               }
         }
