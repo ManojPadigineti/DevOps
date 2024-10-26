@@ -7,7 +7,6 @@ terraform {
   }
 }
 # Terraform File Added
-
 resource "aws_instance" "ec2" {
   for_each = var.ec2_name
   instance_type = "each.k"
