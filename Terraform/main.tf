@@ -23,3 +23,6 @@ resource "null_resource" "null" {
   
 }
 
+resource "a" "name" {
+  
+}
