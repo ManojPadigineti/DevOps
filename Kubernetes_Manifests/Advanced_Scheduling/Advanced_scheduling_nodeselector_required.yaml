@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: nodeselector-deploy
+spec: 
+  replicas: 2
+  selector:
+    matchLabels: 
+      app: nodeselectore 
+  template: 
+    metadata:
+      labels:
+        app: nodeselectore
+    spec: 
+      containers:
+        - name: nodeselector-pod 
+          image: nginx
+          ports:
+           - protocol: TCP
+             containerPort: 80
+      nodeSelector:
+        node: gold

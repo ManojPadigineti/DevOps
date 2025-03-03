@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: node-affinity-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nodeaffinity 
+  template: 
+    metadata: 
+      labels: 
+        app: nodeaffinity
+    spec: 
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node
+                operator: In 
+                values:
+                - gold 
+                - diamond  
+      containers:
+      - name: nodeaffinity-pod
+        image: nginx 
+
+
+            

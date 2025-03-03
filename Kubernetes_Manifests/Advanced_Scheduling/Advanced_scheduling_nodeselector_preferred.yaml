@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodeaffinity-preferred-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nodeaffinity-preferred
+  template:
+    metadata:
+      labels:
+        app: nodeaffinity-preferred
+    spec: 
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 5
+              prefernce: 
+              matchExpressions:
+                - key: node 
+                  operator: In 
+                  values:
+                  - silver
+                  - bronze
+      containers:
+        - name: nodeaffinity-preferred-pod 
+          image: nginx 
+          ports:
+          - protocol: TCP
+            containerPort: 80
+        
+              
