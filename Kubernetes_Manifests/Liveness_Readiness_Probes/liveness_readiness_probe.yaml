@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata: 
+  name: liveness
+spec:
+  replicas: 2 
+  selector:
+    matchLabels:
+      app: liveness 
+  template:
+    metadata:
+      labels:
+        app: liveness
+    spec:
+      containers:
+      - name: nginx
+        image: nginx 
+        ports:
+         - protocol: TCP
+           containerPort: 80
+        livenessProbe:  
+          httpGet:  
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5  
+        readinessProbe:  
+          httpGet:  
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5  
+      tolerations:
+       - key: node
+         operator: Equal
+         value: gold
+         effect: NoSchedule

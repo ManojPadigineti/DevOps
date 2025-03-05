@@ -1,0 +1,76 @@
+apiVersion: v1 
+kind: ConfigMap 
+metadata: 
+  name: details-cm 
+data: 
+  name: manoj
+  address: nellore
+---
+apiVersion: apps/v1
+kind: Deployment 
+metadata: 
+  name: cmvol-deploy 
+spec: 
+  selector:
+   matchLabels:
+     app: cmkey 
+  replicas: 2
+  template:
+    metadata:  
+      labels: 
+         app: cmkey
+    spec:
+      containers:
+       - image: alpine
+         name: cm-vol-pod
+         command: ['sh', '-c', 'cat /manoj/name >> /hp/output.txt && sleep 3000']
+         ports:
+          - protocol: TCP
+            containerPort: 80
+         volumeMounts:
+           - name: cm-volume
+             mountPath: /manoj
+           - name: cm-hp 
+             mountPath: /hp
+      volumes:
+        - name: cm-volume
+          configMap:
+            name: details-cm
+        - name: cm-hp
+          hostPath:
+            path: /home/pod
+---
+apiVersion: apps/v1
+kind: Deployment 
+metadata: 
+  name: cm-keyvalue 
+spec: 
+  selector: 
+    matchLabels:
+      name: cm-keyvalue
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: cm-keyvalue
+    spec:
+      containers:
+      - image: alpine 
+        name: keyvalue-cm
+        command: ['sh', '-c', 'echo value of the key is: $MYADDRESS >> /keyvalue/echofile.txt && env >> /keyvalue/echofile.txt  && sleep 3000']
+        env:
+          - name: MYADDRESS
+            valueFrom:
+              configMapKeyRef:
+                 name: details-cm
+                 key: address
+        volumeMounts:
+          - name: hostpath-cmkeyvalue
+            mountPath: /keyvalue 
+      volumes:
+        - name: hostpath-cmkeyvalue 
+          hostPath:
+            path: /home/pod
+        
+
+          
